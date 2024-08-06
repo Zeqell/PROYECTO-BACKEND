@@ -1,14 +1,34 @@
 const socket = io()
 
-socket.emit("mensaje", "Hola backend")
+let user;
+const chatBox = document.getElementById("chatBox")
 
-socket.on("saludo", (data)=>{
-    console.log(data);
+Swal.fire({
+    title: "identificate",
+    input: "text",
+    text: "Ingresa un usuario para identificarte",
+    inputValidator: (value)=>{
+        return !value && "Necesitas un usuario para continuar";
+    },
+    allowOutsideClick: false
+}).then(result =>{
+    user = result.value
 })
 
-socket.on("usuarios", (arrayUsuarios)=>{
-    const listaUsuarios = document.getElementById("lista-usuarios")
-    arrayUsuarios.forEach(usuarios =>{
-        listaUsuarios.innerHTML += `<li> ${usuarios.nombre} - ${usuarios.apellido} <li>`
-    });
+chatBox.addEventListener("keyup", (event)=>{
+    if(event.key === "Enter"){
+        if(chatBox.value.trim().length > 0){
+            socket.emit("message", {user: user, message: chatBox.value})
+            chatBox.value = "";
+        }
+    }
+})
+
+socket.on("messagesLogs", data =>{
+    const log = document.getElementById("messageLogs")
+    let messages = "";
+    data.forEach(message =>{
+        messages = messages + `${message.user} dice: ${message.message} <br>`
+    })
+    log.innerHTML = messages
 })

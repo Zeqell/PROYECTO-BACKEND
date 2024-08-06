@@ -1,20 +1,17 @@
-import { Router } from "express";
+import {Router} from "express";
+import ProductManager from "../managers/productsManager.js";
 
+const manager = new ProductManager("./src/data/products.json")
 const router = Router()
 
+router.get("/products", async (req, res)=>{
+    const products = await manager.getProducts()
 
-router.get("/", (req, res)=>{
-    res.render("index", {namiStore: "Tu Tienda Online"})
+    res.render("home", {products})
 })
 
-router.get("/tienda", (req, res)=>{
-    res.render("tienda", {})
+router.get("/realtimeproducts", async (req, res)=>{
+    res.render("realTimeProducts")
 })
-
-router.get("/contacto", (req, res)=>{
-    res.render("contacto", {})
-})
-
-
 
 export default router

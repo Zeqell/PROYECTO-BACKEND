@@ -1,0 +1,17 @@
+<link rel="stylesheet" href="css/products.css">
+
+<h1>Products</h1>
+<div id="cardProducts">
+  <div class="card" style="width: 18rem;" >
+    {{#each products}}
+      <div class="card-body d-flex flex-column mb-3 align-items-center">
+          <h5 class="card-title">{{this.title}}</h5>
+          <p class="card-text">{{this.description}}</p>
+          <p class="card-text">${{this.price}}</p>
+          <button class="btn btn-outline-success">Shop</button>
+      </div>
+    {{/each}}
+  </div>  
+</div>
+
+

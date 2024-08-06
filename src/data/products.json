@@ -1,11 +1,110 @@
 [
   {
+    "id": 2,
+    "title": "Nike",
+    "description": "Air Max 270",
+    "price": 350000,
+    "img": "nike-airmax270-img",
+    "code": "nk001",
+    "stock": 50
+  },
+  {
+    "id": 3,
+    "title": "Adidas",
+    "description": "UltraBoost 21",
+    "price": 400000,
+    "img": "adidas-ultraboost21-img",
+    "code": "ad002",
+    "stock": 20
+  },
+  {
+    "id": 4,
+    "title": "Puma",
+    "description": "RS-X",
+    "price": 250000,
+    "img": "puma-rsx-img",
+    "code": "pm003",
+    "stock": 30
+  },
+  {
     "id": 5,
-    "title": "New Balance",
-    "description": "574",
-    "price": 270000,
-    "img": "nb574-img",
-    "code": "nb005",
-    "stock": 35
+    "title": "Reebok",
+    "description": "Classic Leather",
+    "price": 200000,
+    "img": "reebok-classic-img",
+    "code": "rb004",
+    "stock": 25
+  },
+  {
+    "id": 6,
+    "title": "Under Armour",
+    "description": "HOVR Phantom 2",
+    "price": 320000,
+    "img": "ua-hovrphantom2-img",
+    "code": "ua005",
+    "stock": 15
+  },
+  {
+    "id": 7,
+    "title": "Asics",
+    "description": "Gel-Kayano 27",
+    "price": 290000,
+    "img": "asics-gelkayano27-img",
+    "code": "as006",
+    "stock": 40
+  },
+  {
+    "id": 8,
+    "title": "Saucony",
+    "description": "Endorphin Speed",
+    "price": 310000,
+    "img": "saucony-endorphinspeed-img",
+    "code": "sc007",
+    "stock": 22
+  },
+  {
+    "id": 9,
+    "title": "Fila",
+    "description": "Disruptor II",
+    "price": 180000,
+    "img": "fila-disruptor2-img",
+    "code": "fl008",
+    "stock": 28
+  },
+  {
+    "id": 1,
+    "title": "Adidas",
+    "description": "Campus",
+    "price": "175000",
+    "img": "adidas-img",
+    "code": "123adias",
+    "stock": "25"
+  },
+  {
+    "id": 1,
+    "title": "Nike",
+    "description": "Air Force one",
+    "price": "25200",
+    "img": "nike-img",
+    "code": "12356nike",
+    "stock": "30"
+  },
+  {
+    "id": 2,
+    "title": "Puma",
+    "description": "Suede XL",
+    "price": "130000",
+    "img": "puma-img",
+    "code": "254puma",
+    "stock": "25"
+  },
+  {
+    "id": 3,
+    "title": "Vans",
+    "description": "Knu Skool",
+    "price": "90000",
+    "img": "vans-img",
+    "code": "487vans",
+    "stock": "14"
   }
 ]

@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+
+    
+}
+#navbarNav{
+    background-color: #B9CDDA;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    
+}
+.navbar-nav{
+    display: flex;
+    align-items: center;    
+}
+.navbar-expand-lg .navbar-nav .nav-link{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.navbar .navbar-expand-lg .bg-body-tertiary{
+    background-color: #B9CDDA;
+}
+.container-fluid{
+    background-color: #B9CDDA;
+}
