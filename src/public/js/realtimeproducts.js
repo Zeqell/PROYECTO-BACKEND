@@ -1,10 +1,12 @@
 const socket = io()
 
 socket.on("products", (data) =>{
-    productsList(data) 
+    console.log("productos recibidos", data);
+    productsList(data.docs) 
 })
 
 const productsList = (products) =>{
+
     const productsContainer = document.getElementById("productsList")
     productsContainer.innerHTML = ""
 
@@ -12,9 +14,9 @@ const productsList = (products) =>{
         const list = document.createElement("div")
         list.innerHTML = ` 
                             <div class=" card" style="width: 18rem;">
-                                <img src="..." class="card-img-top" alt="img">
+                                <thumbnails src="${item.thumbnails}" class="card-thumbnails-top" alt="thumbnails">
                                 <div class="card-body d-flex flex-column mb-3 align-items-center">
-                                    <p>ID: ${item.id}</p> 
+                                    <p>ID: ${item._id}</p> 
                                     <h2 class="card-title">${item.title}</h2>
                                     <p class="card-text">${item.description}</p>
                                     <p class="card-text">$ ${item.price}</p>
@@ -25,7 +27,7 @@ const productsList = (products) =>{
         productsContainer.appendChild(list)
 
         list.querySelector("button").addEventListener("click",()=>{
-            deleteProduct(item.id)
+            deleteProduct(item._id)
         })
     });
 }
@@ -41,17 +43,21 @@ form.addEventListener("submit", (e)=>{
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
     const price = document.getElementById("price").value;
-    const img = document.getElementById("img").value;
+    const thumbnails = document.getElementById("thumbnails").value;
     const stock = document.getElementById("stock").value;
     const code = document.getElementById("code").value;
+    const status = document.getElementById("status").value
+    const category = document.getElementById("category").value
 
     const newproduct = {
         title,
         description,
         price,
-        img,
+        thumbnails,
         stock,
-        code
+        code,
+        status,
+        category
     }
 
     console.log("producto cargado", newproduct);
