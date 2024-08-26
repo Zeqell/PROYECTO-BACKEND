@@ -6,7 +6,7 @@ const router = Router()
 
 router.get("/", async (req, res)=>{
     try {
-        const {limit, page, query, sort} = req.query
+        const {limit, page, sort, category} = req.query
 
         const productlimit = limit || 10
         const pageNumber = page || 1
@@ -16,7 +16,7 @@ router.get("/", async (req, res)=>{
             limit: productlimit,
             page: pageNumber,
             sort: sortOrder,
-            query: query || ''
+            category: category || ''
         })
         res.json({
             status: 'success',

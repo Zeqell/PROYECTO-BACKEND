@@ -11,9 +11,8 @@ router.get("/products", async (req, res)=>{
         let limit = req.query.limit || 5
         let page = req.query.page || 1
         let sort = req.query.sort || ''
-        let query = req.query || ''
         
-        const products = await manager.getProducts({page, limit,sort, query})
+        const products = await manager.getProducts({page, limit,sort})
         const result = products.docs.map(product=>{
             const {_id, ...rest} = product.toObject()
             return rest

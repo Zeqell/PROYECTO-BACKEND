@@ -33,10 +33,15 @@ export default class ProductManagerDb {
         } 
     }
 
-    async getProducts({page,  limit, sort}={}) {
+    async getProducts({page,  limit, sort, category}={}) {
         try {
+            const filter = {}
+            if(category){
+                filter.category = { $regex: category, $options: 'i' }
+
+            }
             const options = {page: page, limit: limit, sort: sort ? { price: sort === 'asc' ? 1 : -1 } : undefined}
-            const arrayProducts = await ProductsModel.paginate({},options)
+            const arrayProducts = await ProductsModel.paginate(filter,options)
             console.log(arrayProducts);
             return arrayProducts
         } catch (error) {
