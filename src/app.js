@@ -4,11 +4,15 @@ import path from 'path'
 import __dirname from './utils.js';
 import { Server} from 'socket.io'
 import {engine} from 'express-handlebars'
-import usersRouter from "./routes/users.router.js"
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import cookieParser from 'cookie-parser';
+//import usersRouter from "./routes/users.router.js"
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import chatRouter from "./routes/chat.router.js"
-import registerRouter from './routes/register.router.js';
+//import registerRouter from './routes/register.router.js';
+import sessionsRouter from './routes/sessions.router.js'
 import viewRouter from './routes/views.router.js'
 //import ProductManager from './dao/fs/managers/productsManager.js';
 import ProductManagerDb from './dao/db/productDb.js'
@@ -18,7 +22,7 @@ const app = express();
 const PORT = 8080; 
 
 app.use(express.json())
-//app.use(express.urlencoded({extends: true}))
+app.use(express.urlencoded({extends: true}))
 app.use(express.static(path.join(__dirname, 'public')));
 
 //app.engine("hbs", handlebars.engine())
@@ -30,14 +34,25 @@ app.engine('hbs', engine({
          allowProtoMethodsByDefault: true
      }
 }));
+app.use(cookieParser())
 app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, '/views'))
 
-app.use("/api/users", usersRouter)
+app.use(session({
+    secret: "codersecret",
+    resave: true,
+    saveUninitialized: true,
+    storage: MongoStore.create({
+       mongoUrl: "mongodb+srv://schrezequiel:coderhouse2024@cluster0.q96gs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", ttl: 100
+    }),
+}))
+
+//app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
+app.use("/api/sessions", sessionsRouter )
 app.use("/chat", chatRouter)
-app.use("/user", registerRouter)
+//app.use("/user", registerRouter)
 app.use("/", viewRouter)
 
 
