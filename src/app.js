@@ -17,6 +17,8 @@ import viewRouter from './routes/views.router.js'
 //import ProductManager from './dao/fs/managers/productsManager.js';
 import ProductManagerDb from './dao/db/productDb.js'
 import "./conectDb.js"
+import passport  from 'passport';
+import initializePassport from './config/passport.config.js';
 
 const app = express();
 const PORT = 8080; 
@@ -40,12 +42,16 @@ app.set("views", path.join(__dirname, '/views'))
 
 app.use(session({
     secret: "codersecret",
-    resave: true,
-    saveUninitialized: true,
+    resave: false,
+    saveUninitialized: false,
     storage: MongoStore.create({
        mongoUrl: "mongodb+srv://schrezequiel:coderhouse2024@cluster0.q96gs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", ttl: 100
     }),
 }))
+
+initializePassport()
+app.use(passport.initialize())
+app.use(passport.session())
 
 //app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter)

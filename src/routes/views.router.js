@@ -53,16 +53,10 @@ router.get("/realtimeproducts", async (req, res)=>{
 
 
 router.get("/register", (req, res)=>{
-    if(req.session.login){
-        return res.redirect("/profile")
-    }
     res.render("register")
 })
 
 router.get("/login", (req, res)=>{
-    if(req.session.login){
-        return res.redirect("/profile")
-    }
     res.render("login")
 })
 
