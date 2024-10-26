@@ -1,10 +1,11 @@
 import jwt from "jsonwebtoken"
 import UserModel from "../dao/models/users.model.js"
+import configObject from "../config/config.js"
 
-const private_key = "secretToken"
+const{secret_or_key}= configObject
 
 const generateToken = (user) =>{
-    const token = jwt.sign({email:user.email, first_name: user.first_name, last_name: user.last_name,}, private_key, {expiresIn: "24h"})
+    const token = jwt.sign({email:user.email, first_name: user.first_name, last_name: user.last_name, role: user.role}, secret_or_key, {expiresIn: "24h"})
     return token
 }
 // Función para registrar o iniciar sesión con GitHub
@@ -14,9 +15,9 @@ const githubAuth = async (profile) => {
         if (!user) {
             let newUser = {
                 first_name: profile._json.name,
-                last_name: profile._json.name,
+                last_name: "",
                 email: profile._json.email,
-                password: "123",
+                password: "",
             }
             user = await UserModel.create(newUser)
         }

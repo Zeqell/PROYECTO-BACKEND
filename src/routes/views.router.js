@@ -1,18 +1,19 @@
 import {Router} from "express";
-import ProductManagerDb from "../dao/db/productDb.js";
-import CartsManagerDb from "../dao/db/cartDb.js";
+import  productService  from "../services/product.service.js";
+import  cartServices  from "../services/cart.service.js";
+import { adminOnly, usersOnly } from "../utils/authorization.js";
+import passport from "passport";
 
-const managercart = new CartsManagerDb()
-const manager = new ProductManagerDb()
 const router = Router()
 
-router.get("/products", async (req, res)=>{
+router.get("/products", passport.authenticate("current", {session:false}), usersOnly, async (req, res)=>{
     try {
         let limit = req.query.limit || 5
         let page = req.query.page || 1
         let sort = req.query.sort || ''
         
-        const products = await manager.getProducts({page, limit,sort})
+        const products = await productService.getProduct({page, limit,sort})
+
         const result = products.docs.map(product=>{
             const {_id, ...rest} = product.toObject()
             return rest
@@ -35,7 +36,7 @@ router.get("/products", async (req, res)=>{
 router.get("/carts/:cid", async (req, res)=>{
     try {
         const cid = req.params.cid
-        const cart = await managercart.getCartsById(cid)
+        const cart = await cartServices.getCartsById(cid)
         if (!cart) {
             res.status(404).send("Carrito no encontrado");
         } else {
@@ -47,7 +48,7 @@ router.get("/carts/:cid", async (req, res)=>{
     }
 })
 
-router.get("/realtimeproducts", async (req, res)=>{
+router.get("/realtimeproducts", passport.authenticate("current", {session:false}), adminOnly, async (req, res)=>{
     res.render("realTimeProducts")
 })
 

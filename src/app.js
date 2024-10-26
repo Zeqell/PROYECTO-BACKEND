@@ -7,27 +7,25 @@ import {engine} from 'express-handlebars'
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
-//import usersRouter from "./routes/users.router.js"
 import productsRouter from "./routes/products.router.js"
 import cartsRouter from "./routes/carts.router.js"
 import chatRouter from "./routes/chat.router.js"
-//import registerRouter from './routes/register.router.js';
 import sessionsRouter from './routes/sessions.router.js'
 import viewRouter from './routes/views.router.js'
-//import ProductManager from './dao/fs/managers/productsManager.js';
 import ProductManagerDb from './dao/db/productDb.js'
-import "./conectDb.js"
 import passport  from 'passport';
 import initializePassport from './config/passport.config.js';
+import configObject from './config/config.js';
+import DataBase from './conectDb.js';
 
+const Db = DataBase.getInstance()
 const app = express();
-const PORT = 8080; 
+const {port, mongo_url, secret} = configObject; 
 
 app.use(express.json())
 app.use(express.urlencoded({extends: true}))
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.engine("hbs", handlebars.engine())
 app.engine('hbs', engine({
      extname: '.hbs',
      defaultLayout: 'main',
@@ -41,11 +39,11 @@ app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, '/views'))
 
 app.use(session({
-    secret: "codersecret",
+    secret: secret,
     resave: false,
     saveUninitialized: false,
     storage: MongoStore.create({
-       mongoUrl: "mongodb+srv://schrezequiel:coderhouse2024@cluster0.q96gs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", ttl: 100
+       mongoUrl: mongo_url, ttl: 100
     }),
 }))
 
@@ -53,12 +51,10 @@ initializePassport()
 app.use(passport.initialize())
 app.use(passport.session())
 
-//app.use("/api/users", usersRouter)
 app.use("/api/products", productsRouter)
 app.use("/api/carts", cartsRouter)
 app.use("/api/sessions", sessionsRouter )
 app.use("/chat", chatRouter)
-//app.use("/user", registerRouter)
 app.use("/", viewRouter)
 
 
@@ -76,8 +72,8 @@ app.post("/imagenes", upload.array("imagen"), (req, res)=>{
     res.send("imagen cargada")
 })
 
-const httpServer = app.listen(PORT, ()=>{
-    console.log(`Escuchando en el puerto: ${PORT}`);
+const httpServer = app.listen(port, ()=>{
+    console.log(`Escuchando en el puerto: ${port}`);
 })
 
 let messages = []

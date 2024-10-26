@@ -1,9 +1,15 @@
-const authorization = (role) =>{
-    return async (req, res, next)=>{
-        if(req.user.role !== role){
-            return res.status(403).send("Credenciales invalidas")
-        }next()
+export function adminOnly(req, res, next){
+    if(req.user.role === "admin"){
+        next()
+    }else{
+        res.status(403).send("Acceso denegado, solo admin")
     }
 }
 
-export default authorization
+export function usersOnly (req, res, next){
+    if(req.user.role === "user"){
+        next()
+    }else{
+        res.status(403).send("Acceso denegado, solo users")
+    }
+}
